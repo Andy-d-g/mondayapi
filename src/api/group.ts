@@ -1,5 +1,5 @@
-import { DistinctArgs } from "../@types/generics";
-import { CreateGroupArgs, GroupField, RemoveGroupArgs } from "../@types/group";
+import { DistinctArgs } from "../interfaces/generics";
+import { CreateGroupArgs, GroupField, RemoveGroupArgs } from "../interfaces/group";
 import { formatArgs, formatFields } from "../apiHelper";
 import request from "../request";
 

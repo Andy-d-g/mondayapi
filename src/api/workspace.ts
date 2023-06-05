@@ -1,5 +1,5 @@
-import { DistinctArgs } from "../@types/generics";
-import { WorkspaceField } from "../@types/workspave";
+import { DistinctArgs } from "../interfaces/generics";
+import { WorkspaceField } from "../interfaces/workspave";
 import { formatFields } from "../apiHelper";
 import request from "../request";
 

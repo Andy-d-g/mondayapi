@@ -3,8 +3,8 @@ import {
   CreateColumnArgs,
   RemoveColumnArgs,
   UpdateColumnArgs,
-} from "../@types/column";
-import { DistinctArgs } from "../@types/generics";
+} from "../interfaces/column";
+import { DistinctArgs } from "../interfaces/generics";
 import { formatArgs, formatFields } from "../apiHelper";
 import request from "../request";
 

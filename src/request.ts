@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "./config";
-import { DistinctArgs, DeepPick } from "./@types/generics";
+import { DistinctArgs, DeepPick } from "./interfaces/generics";
 
 const request = async <
   T extends Record<string, unknown>,

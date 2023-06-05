@@ -1,5 +1,5 @@
-import { DistinctArgs } from "../@types/generics";
-import { CreateSubItemArgs, ItemField } from "../@types/item";
+import { DistinctArgs } from "../interfaces/generics";
+import { CreateSubItemArgs, ItemField } from "../interfaces/item";
 import { formatArgs, formatFields } from "../apiHelper";
 import request from "../request";
 

@@ -1,5 +1,5 @@
-import { BoardField } from "../@types/board";
-import { DistinctArgs } from "../@types/generics";
+import { BoardField } from "../interfaces/board";
+import { DistinctArgs } from "../interfaces/generics";
 import { formatFields } from "../apiHelper";
 import request from "../request";
 
