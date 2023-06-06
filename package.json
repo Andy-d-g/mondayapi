@@ -1,6 +1,6 @@
 {
   "name": "mondayapi",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "monday api helper",
   "main": "./dist/index.js",
   "source": "./src/index.ts",

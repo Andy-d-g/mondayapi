@@ -4,15 +4,29 @@ import { formatArgs, formatFields } from "../apiHelper";
 import request from "../request";
 
 class GroupApi {
+  /**
+   * List group by board id
+   * @template {T}
+   * @param {number} boardId - The boardId where remove the group
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<GroupField, T>>} A promise of an object which contains provide fields
+   */
   public static listGroup = async <T extends DistinctArgs<GroupField>>(
-    board_id: number,
+    boardId: number,
     fields: T
   ) => {
     return request<GroupField, typeof fields>(
-      `query {boards (ids: ${board_id}) {${formatFields(fields)}} }`
+      `query {boards (ids: ${boardId}) {${formatFields(fields)}} }`
     );
   };
 
+  /**
+   * Create group
+   * @template {T}
+   * @param {CreateGroupArgs} args - The arguments to create the group
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<GroupField, T>>} A promise of an object which contains provide fields
+   */
   public static createGroup = <T extends DistinctArgs<GroupField>>(
     args: CreateGroupArgs,
     fields: T
@@ -23,6 +37,13 @@ class GroupApi {
     );
   };
 
+  /**
+   * Remove group
+   * @template {T}
+   * @param {RemoveGroupArgs} args - The arguments to remove the group
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<GroupField, T>>} A promise of an object which contains provide fields
+   */
   // Need specific access that I don't have
   public static removeGroup = <T extends DistinctArgs<GroupField>>(
     args: RemoveGroupArgs,

@@ -9,6 +9,13 @@ import { formatArgs, formatFields } from "../apiHelper";
 import request from "../request";
 
 class ColumnApi {
+  /**
+   * Create column
+   * @template {T}
+   * @param {CreateColumnArgs} args - The arguments to create the column
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
+   */
   public static createColumn = <T extends DistinctArgs<ColumnField>>(
     args: CreateColumnArgs,
     fields: T
@@ -19,6 +26,13 @@ class ColumnApi {
     );
   };
 
+  /**
+   * Remove column by board id and column id
+   * @template {T}
+   * @param {RemoveColumnArgs} args - The arguments to remove the column
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
+   */
   public static removeColumn = <T extends DistinctArgs<ColumnField>>(
     args: RemoveColumnArgs,
     fields: T
@@ -29,6 +43,14 @@ class ColumnApi {
     );
   };
 
+  /**
+   * Update column by board id and column id
+   * @template {T}
+   * @param {UpdateColumnArgs} args - The arguments to remove the column
+   * @param {T} fields - The expect fields
+   * @param {Record<string, string | number>} values - The values to add into the column
+   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
+   */
   public static updateColumn = <T extends DistinctArgs<ColumnField>>(
     args: UpdateColumnArgs,
     fields: T,
@@ -41,12 +63,19 @@ class ColumnApi {
     );
   };
 
+  /**
+   * List column by board id
+   * @template {T}
+   * @param {number} boardId - The arguments to remove the column
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
+   */
   public static listColumnByBoard = async <T extends DistinctArgs<ColumnField>>(
-    board_id: number,
+    boardId: number,
     fields: T
   ) => {
     const response = await request(
-      `query {boards (ids: ${board_id}) { columns {${formatFields(fields)}}}}`
+      `query {boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`
     );
     if (!Array.isArray(response)) {
       throw new Error("data format not valid");

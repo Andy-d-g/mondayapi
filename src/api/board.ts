@@ -4,6 +4,13 @@ import { formatFields } from "../apiHelper";
 import request from "../request";
 
 class BoardApi {
+  /**
+   * Get board by id
+   * @template {T}
+   * @param {number} boardId - The board id
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
+   */
   public static getBoard = <T extends DistinctArgs<BoardField>>(
     boardId: number,
     fields: T
@@ -13,6 +20,12 @@ class BoardApi {
     );
   };
 
+  /**
+   * List boards
+   * @template {T}
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
+   */
   public static listBoard = async <T extends DistinctArgs<BoardField>>(
     fields: T
   ) => {
@@ -32,6 +45,13 @@ class BoardApi {
   };
   */
 
+  /**
+   * Remove board by id
+   * @template {T}
+   * @param {number} boardId - The board id
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
+   */
   public static removeBoard = <T extends DistinctArgs<BoardField>>(
     boardId: string,
     fields: T

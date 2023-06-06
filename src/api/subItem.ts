@@ -4,6 +4,14 @@ import { formatArgs, formatFields } from "../apiHelper";
 import request from "../request";
 
 class SubItemApi {
+  /**
+   * Create sub item
+   * @template {T}
+   * @param {CreateSubItemArgs} args - Board id
+   * @param {T} fields - The expect fields
+   * @param {Record<string, string | number>} values - values to insert into the sub items
+   * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
+   */
   public static createSubItem = async <T extends DistinctArgs<ItemField>>(
     args: CreateSubItemArgs,
     fields: T,
@@ -16,6 +24,13 @@ class SubItemApi {
     );
   };
 
+  /**
+   * List sub items by item
+   * @template {T}
+   * @param {number} itemId - Item id
+   * @param {T} fields - The expect fields
+   * @return {Array<Awaited<ReturnType<typeof request<ItemField, typeof fields>>>>} A promise of an object which contains provide fields
+   */
   public static listSubItemsByItem = async <T extends DistinctArgs<ItemField>>(
     itemId: number,
     fields: T
