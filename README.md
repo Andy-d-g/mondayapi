@@ -2,7 +2,7 @@
 
 This library allow to make common request to the monday api with NodeJS
 
-## Before use ⚠️
+## Warning ⚠️
 
 Warning : returns Id(s) are typed as number but are in reality strings
 
@@ -10,13 +10,9 @@ Why ? Because API expect number, but return string. So the API of the library ma
 
 Also, we provide only 1 level of depth (items.items). It can be increase if you customize the library
 
-There is some bugs in it for the moment.
+There is probably some bugs in it for the moment.
 
-## Documentation
-
-The official monday api documentation : https://developer.monday.com/api-reference/docs
-
-## How to install
+## Installation
 
 ```sh
 # npm
@@ -26,9 +22,11 @@ $ npm install mondayapi
 $ yarn install mondayapi
 ```
 
-## How to use
+## Requirement
 
-You need to have a developper monday api key
+You need to have a developper [monday api key](https://support.monday.com/hc/en-us/articles/360005144659-Does-monday-com-have-an-API-)
+
+## Usage
 
 ```typescript
 import Api from "mondayapi";
@@ -37,15 +35,19 @@ const api = new Api("MONDAY API KEY");
 
 const boardId = 123;
 const groupId = 456;
-const items = await api.item.listItemsByGroup(
-    boardId, 
-    groupId, 
-    ["id","name"]
-);
+const items = await api.item.listItemsByGroup(boardId, groupId, ["id", "name"]);
 // items[0].id is string same if the type says number
 // You need to cast it into number
 // Number(items[0].id)
 ```
 
+## Documentation
 
+The official monday api documentation : https://developer.monday.com/api-reference/docs
 
+- [Workspace API](./documentation/workspace.md)
+- [Item API](./documentation/item.md)
+- [Sub item API](./documentation/subItem.md)
+- [Group API](./documentation/group.md)
+- [Column API](./documentation/column.md)
+- [Board API](./documentation/board.md)
