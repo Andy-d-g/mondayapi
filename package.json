@@ -1,6 +1,6 @@
 {
   "name": "mondayapi",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "monday api helper",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
@@ -14,12 +14,15 @@
     "dev": "npm run build && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andy-d-g/mondayapi"
+  },
   "keywords": [],
   "author": "Andy GUILLAUME",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",
-    "dotenv": "^16.0.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {

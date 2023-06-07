@@ -20,10 +20,10 @@ The official monday api documentation : https://developer.monday.com/api-referen
 
 ```sh
 # npm
-$ npm install monday-api
+$ npm install mondayapi
 
 # yarn
-$ yarn install monday-api
+$ yarn install mondayapi
 ```
 
 ## How to use
