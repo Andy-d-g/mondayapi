@@ -6,7 +6,7 @@ import {
 } from "../interfaces/column";
 import { DistinctArgs } from "../interfaces/generics";
 import { formatArgs, formatFields } from "../apiHelper";
-import request from "../request";
+import request, { ResponseFormatEnum } from "../request";
 
 class ColumnApi {
   /**
@@ -57,7 +57,7 @@ class ColumnApi {
     values: Record<string, string | number>
   ) => {
     const column_values = JSON.stringify(JSON.stringify(values));
-    return request(
+    return request<ColumnField, typeof fields>(
       // prettier-ignore
       `mutation { change_multiple_column_values (${formatArgs(args)}, column_values: ${column_values}) {${formatFields(fields)}}}`
     );
@@ -68,20 +68,20 @@ class ColumnApi {
    * @template {T}
    * @param {number} boardId - The arguments to remove the column
    * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
+   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an array of object which contains provide fields
    */
   public static listColumnByBoard = async <T extends DistinctArgs<ColumnField>>(
     boardId: number,
     fields: T
   ) => {
     const response = await request(
-      `query {boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`
+      `query { boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`
     );
     if (!Array.isArray(response)) {
       throw new Error("data format not valid");
     }
-    return response[0].columns as ReturnType<
-      typeof request<ColumnField, typeof fields>
+    return response[0].columns as unknown as Awaited<
+      ReturnType<typeof request<ColumnField, T, ResponseFormatEnum.ARRAY>>
     >;
   };
 }

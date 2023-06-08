@@ -1,7 +1,11 @@
 import { DistinctArgs } from "../interfaces/generics";
-import { CreateGroupArgs, GroupField, RemoveGroupArgs } from "../interfaces/group";
+import {
+  CreateGroupArgs,
+  GroupField,
+  RemoveGroupArgs,
+} from "../interfaces/group";
 import { formatArgs, formatFields } from "../apiHelper";
-import request from "../request";
+import request, { ResponseFormatEnum } from "../request";
 
 class GroupApi {
   /**
@@ -9,13 +13,13 @@ class GroupApi {
    * @template {T}
    * @param {number} boardId - The boardId where remove the group
    * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<GroupField, T>>} A promise of an object which contains provide fields
+   * @return {ReturnType<typeof request<GroupField, T>>} A promise of an array of object which contains provide fields
    */
   public static listGroup = async <T extends DistinctArgs<GroupField>>(
     boardId: number,
     fields: T
   ) => {
-    return request<GroupField, typeof fields>(
+    return request<GroupField, typeof fields, ResponseFormatEnum.ARRAY>(
       `query {boards (ids: ${boardId}) {${formatFields(fields)}} }`
     );
   };

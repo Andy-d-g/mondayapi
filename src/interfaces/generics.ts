@@ -4,6 +4,8 @@ type Tail<T extends string> = T extends `${string}.${infer Rest}`
   ? Rest
   : never;
 
+type NonEmptyArray<T> = [T, ...T[]];
+
 export type DeepPick<T, K extends string> = T extends object
   ? {
       [P in Head<K> & keyof T]: T[P] extends readonly unknown[]
@@ -23,7 +25,9 @@ type FlattenObject<
     : `${TKey}`
   : never;
 
-export type DistinctArgs<T extends Record<string, unknown>> = Array<FlattenObject<T>>;
+export type DistinctArgs<T extends Record<string, unknown>> = NonEmptyArray<
+  FlattenObject<T>
+>;
 
 type BuildTuple<L extends number, T extends unknown[] = []> = T extends {
   length: L;
@@ -31,8 +35,9 @@ type BuildTuple<L extends number, T extends unknown[] = []> = T extends {
   ? T
   : BuildTuple<L, [...T, unknown]>;
 
-export type MinusOne<N extends number> = BuildTuple<N> extends [...infer U, unknown]
+export type MinusOne<N extends number> = BuildTuple<N> extends [
+  ...infer U,
+  unknown
+]
   ? U["length"]
   : never;
-
-export type NonEmptyArray<T> = [T, ...T[]];

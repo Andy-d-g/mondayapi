@@ -2,12 +2,22 @@ import axios from "axios";
 import config from "./config";
 import { DistinctArgs, DeepPick } from "./interfaces/generics";
 
+export enum ResponseFormatEnum {
+  OBJECT = "object",
+  ARRAY = "array",
+}
+
 const request = async <
   T extends Record<string, unknown>,
-  K extends DistinctArgs<T>
+  K extends DistinctArgs<T>,
+  R extends ResponseFormatEnum = ResponseFormatEnum.OBJECT
 >(
   query: string
-): Promise<DeepPick<T, K[number]>> => {
+): Promise<
+  R extends ResponseFormatEnum.ARRAY
+    ? Array<DeepPick<T, K[number]>>
+    : DeepPick<T, K[number]>
+> => {
   const response = await axios.post(
     "https://api.monday.com/v2",
     { query },
@@ -20,12 +30,12 @@ const request = async <
   );
   const { data } = response.data;
   if (!data) {
-    console.log(response.data);
+    console.error(response.data);
     throw new Error("No data");
   }
   const key = Object.keys(data).at(0);
   if (!key) {
-    console.log(response);
+    console.error(response);
     throw new Error("No key");
   }
   return data[key];

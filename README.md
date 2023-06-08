@@ -51,3 +51,7 @@ The official monday api documentation : https://developer.monday.com/api-referen
 - [Group API](./documentation/group.md)
 - [Column API](./documentation/column.md)
 - [Board API](./documentation/board.md)
+
+## Contribute
+
+[join me on Github](https://github.com/Andy-d-g/mondayapi)

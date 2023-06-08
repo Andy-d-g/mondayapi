@@ -1,7 +1,7 @@
 import { DistinctArgs } from "../interfaces/generics";
 import { CreateItemArgs, ItemField } from "../interfaces/item";
 import { formatArgs, formatFields } from "../apiHelper";
-import request from "../request";
+import request, { ResponseFormatEnum } from "../request";
 
 class ItemApi {
   /**
@@ -40,7 +40,7 @@ class ItemApi {
       `query { boards (ids: ${boardId}) { items {${formatFields(fields)}}}}`
     );
     return response.items as ReturnType<
-      typeof request<ItemField, typeof fields>
+      typeof request<ItemField, typeof fields, ResponseFormatEnum.ARRAY>
     >;
   };
 
@@ -64,8 +64,10 @@ class ItemApi {
     if (!(Array.isArray(response) && Array.isArray(response[0].groups))) {
       throw new Error("data format not valid");
     }
-    return response[0].groups[0].items as Array<
-      Awaited<ReturnType<typeof request<ItemField, typeof fields>>>
+    return response[0].groups[0].items as Awaited<
+      ReturnType<
+        typeof request<ItemField, typeof fields, ResponseFormatEnum.ARRAY>
+      >
     >;
   };
 }

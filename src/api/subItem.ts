@@ -1,7 +1,7 @@
 import { DistinctArgs } from "../interfaces/generics";
 import { CreateSubItemArgs, ItemField } from "../interfaces/item";
 import { formatArgs, formatFields } from "../apiHelper";
-import request from "../request";
+import request, { ResponseFormatEnum } from "../request";
 
 class SubItemApi {
   /**
@@ -41,8 +41,10 @@ class SubItemApi {
     if (!Array.isArray(response)) {
       throw new Error("data format not valid");
     }
-    return (response[0].subitems || []) as Array<
-      Awaited<ReturnType<typeof request<ItemField, typeof fields>>>
+    return (response[0].subitems || []) as Awaited<
+      ReturnType<
+        typeof request<ItemField, typeof fields, ResponseFormatEnum.ARRAY>
+      >
     >;
   };
 }

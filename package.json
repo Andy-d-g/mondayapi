@@ -1,7 +1,7 @@
 {
   "name": "mondayapi",
-  "version": "1.1.0",
-  "description": "monday api helper",
+  "version": "1.1.2",
+  "description": "Wrap the https monday API. It allows to have typed responses and provide correct parameters.",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
@@ -18,8 +18,23 @@
     "type": "git",
     "url": "https://github.com/Andy-d-g/mondayapi"
   },
-  "keywords": [],
-  "author": "Andy GUILLAUME",
+  "homepage": "https://github.com/Andy-d-g/mondayapi#readme",
+  "bugs": {
+    "url": "https://github.com/Andy-d-g/mondayapi/issues",
+    "email": "andy.guillaume75@gmail.com"
+  },
+  "keywords": [
+    "monday",
+    "nodejs",
+    "api",
+    "helper",
+    "typescript"
+  ],
+  "author": {
+    "name": "Andy GUILLAUME",
+    "email": "andy.guillaume75@gmail.com",
+    "url": "https://ipreze.com"
+  },
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",

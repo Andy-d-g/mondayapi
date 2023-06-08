@@ -1,7 +1,7 @@
 import { BoardField } from "../interfaces/board";
 import { DistinctArgs } from "../interfaces/generics";
 import { formatFields } from "../apiHelper";
-import request from "../request";
+import request, { ResponseFormatEnum } from "../request";
 
 class BoardApi {
   /**
@@ -11,7 +11,7 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static getBoard = <T extends DistinctArgs<BoardField>>(
+  public static getBoard = async <T extends DistinctArgs<BoardField>>(
     boardId: number,
     fields: T
   ) => {
@@ -24,14 +24,14 @@ class BoardApi {
    * List boards
    * @template {T}
    * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
+   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an array of object which contains provide fields
    */
   public static listBoard = async <T extends DistinctArgs<BoardField>>(
     fields: T
   ) => {
-    return request<BoardField, typeof fields>(
+    return request<BoardField, typeof fields, ResponseFormatEnum.ARRAY>(
       `query { boards {${formatFields(fields)}} }`
-    );
+    ); //as unknown as Array<Awaited<ReturnType<typeof request<BoardField, T>>>>;
   };
 
   /*
