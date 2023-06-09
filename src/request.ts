@@ -29,15 +29,13 @@ const request = async <
     }
   );
   const { data } = response.data;
-  if (!data) {
-    console.error(response.data);
-    throw new Error("No data");
+  if (config.log) {
+    console.info(response);
+    console.info(query);
   }
+  if (!data) throw new Error("No data");
   const key = Object.keys(data).at(0);
-  if (!key) {
-    console.error(response);
-    throw new Error("No key");
-  }
+  if (!key) throw new Error("No key");
   return data[key];
 };
 

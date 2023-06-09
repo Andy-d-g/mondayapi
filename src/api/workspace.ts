@@ -1,7 +1,7 @@
 import { DistinctArgs } from "../interfaces/generics";
 import { WorkspaceField } from "../interfaces/workspace";
 import { formatFields } from "../apiHelper";
-import request from "../request";
+import request, { ResponseFormatEnum } from "../request";
 
 class WorkspaceApi {
   /**
@@ -11,13 +11,16 @@ class WorkspaceApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<WorkspaceField, T>>} A promise of an object which contains provide fields
    */
-  public static getWorkspace = <T extends DistinctArgs<WorkspaceField>>(
+  public static getWorkspace = async <T extends DistinctArgs<WorkspaceField>>(
     workspaceId: string,
     fields: T
   ) => {
-    return request<WorkspaceField, typeof fields>(
-      `query { workspaces (ids: ${workspaceId}) {${formatFields(fields)}} }`
-    );
+    const response = await request<
+      WorkspaceField,
+      typeof fields,
+      ResponseFormatEnum.ARRAY
+    >(`query { workspaces (ids: ${workspaceId}) {${formatFields(fields)}} }`);
+    return response[0];
   };
 }
 

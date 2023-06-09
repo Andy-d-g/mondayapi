@@ -4,9 +4,10 @@ import {
   RemoveColumnArgs,
   UpdateColumnArgs,
 } from "../interfaces/column";
-import { DistinctArgs } from "../interfaces/generics";
+import { DeepPick, DistinctArgs } from "../interfaces/generics";
 import { formatArgs, formatFields } from "../apiHelper";
 import request, { ResponseFormatEnum } from "../request";
+import { BoardField } from "interfaces";
 
 class ColumnApi {
   /**
@@ -23,23 +24,6 @@ class ColumnApi {
     return request<ColumnField, typeof fields>(
       // prettier-ignore
       `mutation { create_column (${formatArgs(args)}) {${formatFields(fields)}} }`
-    );
-  };
-
-  /**
-   * Remove column by board id and column id
-   * @template {T}
-   * @param {RemoveColumnArgs} args - The arguments to remove the column
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
-   */
-  public static removeColumn = <T extends DistinctArgs<ColumnField>>(
-    args: RemoveColumnArgs,
-    fields: T
-  ) => {
-    return request<ColumnField, typeof fields>(
-      // prettier-ignore
-      `mutation { delete_column (${formatArgs(args)}) {${formatFields(fields)}} }`
     );
   };
 
@@ -74,15 +58,32 @@ class ColumnApi {
     boardId: number,
     fields: T
   ) => {
-    const response = await request(
-      `query { boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`
+    const rawFields = fields.map(
+      (field) => `boards.columns.${field}`
+    ) as DistinctArgs<BoardField>;
+    const response = await request<
+      BoardField,
+      typeof rawFields,
+      ResponseFormatEnum.ARRAY
+    >(`query { boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`);
+    return response[0].columns || ([] as DeepPick<ColumnField, T[number]>[]);
+  };
+
+  /**
+   * Remove column by board id and column id
+   * @template {T}
+   * @param {RemoveColumnArgs} args - The arguments to remove the column
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
+   */
+  public static removeColumn = <T extends DistinctArgs<ColumnField>>(
+    args: RemoveColumnArgs,
+    fields: T
+  ) => {
+    return request<ColumnField, typeof fields>(
+      // prettier-ignore
+      `mutation { delete_column (${formatArgs(args)}) {${formatFields(fields)}} }`
     );
-    if (!Array.isArray(response)) {
-      throw new Error("data format not valid");
-    }
-    return response[0].columns as unknown as Awaited<
-      ReturnType<typeof request<ColumnField, T, ResponseFormatEnum.ARRAY>>
-    >;
   };
 }
 

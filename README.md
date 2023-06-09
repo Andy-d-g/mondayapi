@@ -12,6 +12,8 @@ Also, we provide only 1 level of depth (items.items). It can be increase if you 
 
 There is probably some bugs in it for the moment.
 
+Feel free to [help me](#contribute)
+
 ## Installation
 
 ```sh
@@ -36,9 +38,7 @@ const api = new Api("MONDAY API KEY");
 const boardId = 123;
 const groupId = 456;
 const items = await api.item.listItemsByGroup(boardId, groupId, ["id", "name"]);
-// items[0].id is string same if the type says number
-// You need to cast it into number
-// Number(items[0].id)
+// To manage ids, we need to cast it : Number(items[0].id)
 ```
 
 ## Documentation

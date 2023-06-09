@@ -29,15 +29,13 @@ export type DistinctArgs<T extends Record<string, unknown>> = NonEmptyArray<
   FlattenObject<T>
 >;
 
-type BuildTuple<L extends number, T extends unknown[] = []> = T extends {
-  length: L;
-}
-  ? T
-  : BuildTuple<L, [...T, unknown]>;
+type Repeat<N extends number> = _Repeat<N, []>;
+type _Repeat<N extends number, A extends string[]> = A["length"] extends N
+  ? A
+  : _Repeat<N, ["*", ...A]>;
 
-export type MinusOne<N extends number> = BuildTuple<N> extends [
-  ...infer U,
-  unknown
-]
+export type MinusOne<N extends number> = Repeat<N> extends [...infer U, unknown]
   ? U["length"]
   : never;
+
+export type Override<T, R> = Omit<T, keyof R> & R;

@@ -20,6 +20,13 @@ Defined in [/src/api/board.ts](../src/api/board.ts)
 | boardId | Number                                     | False    |
 | fields  | [BoardField[]](../src/interfaces/board.ts) | False    |
 
+### **createBoard**
+
+| Name   | Type                                          | Optional |
+| ------ | --------------------------------------------- | -------- |
+| args   | [CreateBoardArgs](../src/interfaces/board.ts) | False    |
+| fields | [BoardField[]](../src/interfaces/board.ts)    | False    |
+
 ### **listBoard**
 
 | Name   | Type                                       | Optional |

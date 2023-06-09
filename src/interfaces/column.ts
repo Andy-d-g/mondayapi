@@ -12,8 +12,8 @@ export type ColumnField = {
 export type CreateColumnArgs = {
   title: string;
   description: string;
-  boardId: number;
-  type: "text" | "status";
+  board_id: number;
+  column_type: "text" | "status";
 };
 
 export type RemoveColumnArgs = {

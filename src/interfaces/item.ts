@@ -2,27 +2,27 @@ import { BoardField } from "./board";
 import { MinusOne } from "./generics";
 import { GroupField } from "./group";
 
+// https://developer.monday.com/api-reference/docs/items
+
 export type ItemState = "all" | "active" | "deleted" | "archived";
 
 export type BaseItemField = {
-  board: BoardField;
   creator_id: string;
   email: string;
-  group: GroupField;
   id: string;
   name: string;
   relative_link: string;
   state: ItemState;
 };
 
-type _ItemField<Depth extends number> = Depth extends 0
+export type ItemField<Depth extends number = 0> = Depth extends 0
   ? BaseItemField
   : BaseItemField & {
-      parent_item: _ItemField<MinusOne<Depth>>;
-      subitems: _ItemField<MinusOne<Depth>>[];
+      parent_item: ItemField<MinusOne<Depth>>;
+      subitems: ItemField<MinusOne<Depth>>[];
+      board: BoardField<MinusOne<Depth>>;
+      group: GroupField<MinusOne<Depth>>;
     };
-
-export type ItemField = _ItemField<1>;
 
 export type CreateItemArgs = {
   board_id: number;

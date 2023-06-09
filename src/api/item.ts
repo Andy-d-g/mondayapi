@@ -1,7 +1,8 @@
-import { DistinctArgs } from "../interfaces/generics";
+import { DeepPick, DistinctArgs } from "../interfaces/generics";
 import { CreateItemArgs, ItemField } from "../interfaces/item";
 import { formatArgs, formatFields } from "../apiHelper";
 import request, { ResponseFormatEnum } from "../request";
+import { BoardField } from "../interfaces";
 
 class ItemApi {
   /**
@@ -20,7 +21,7 @@ class ItemApi {
     const column_values = JSON.stringify(JSON.stringify(values));
     return request<ItemField, typeof fields>(
       // prettier-ignore
-      `mutation { create_item (${formatArgs(args)}, column_values: ${column_values} ) {${formatFields(fields)}}}`
+      `mutation { create_item (${formatArgs(args)}, column_values: ${column_values} ) { ${formatFields(fields)} }}`
     );
   };
 
@@ -35,13 +36,19 @@ class ItemApi {
     boardId: number,
     fields: T
   ) => {
-    const response = await request(
-      // prettier-ignore
-      `query { boards (ids: ${boardId}) { items {${formatFields(fields)}}}}`
-    );
-    return response.items as ReturnType<
-      typeof request<ItemField, typeof fields, ResponseFormatEnum.ARRAY>
+    // TODO : Override BoardField[items] with DeepPick<ItemField, T[number]>[];
+    const rawFields = fields.map((field) => `items.${field}`) as DistinctArgs<
+      BoardField<1>
     >;
+    const response = await request<
+      BoardField<1>,
+      typeof rawFields,
+      ResponseFormatEnum.ARRAY
+    >(
+      // prettier-ignore
+      `query { boards (ids: ${boardId}) { items {${formatFields(fields)} }}}`
+    );
+    return (response[0].items || []) as DeepPick<ItemField, T[number]>[];
   };
 
   /**
@@ -57,18 +64,21 @@ class ItemApi {
     groupId: string,
     fields: T
   ) => {
-    const response = await request(
+    const rawFields = fields.map(
+      (field) => `boards.groups.${field}`
+    ) as DistinctArgs<BoardField<2>>;
+    const response = await request<
+      BoardField<2>,
+      typeof rawFields,
+      ResponseFormatEnum.ARRAY
+    >(
       // prettier-ignore
-      `query { boards (ids: ${boardId}) { groups (ids: ${groupId}) { items {${formatFields(fields)}}}}}`
+      `query { boards (ids: ${boardId}) { groups (ids: ${groupId}) { items {${formatFields(fields)} }}}}`
     );
-    if (!(Array.isArray(response) && Array.isArray(response[0].groups))) {
-      throw new Error("data format not valid");
-    }
-    return response[0].groups[0].items as Awaited<
-      ReturnType<
-        typeof request<ItemField, typeof fields, ResponseFormatEnum.ARRAY>
-      >
-    >;
+    return (response[0].groups[0].items || []) as DeepPick<
+      ItemField,
+      T[number]
+    >[];
   };
 }
 

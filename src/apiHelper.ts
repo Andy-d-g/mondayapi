@@ -48,7 +48,7 @@ const isCustomType = (v: unknown) => customType.safeParse(v).success;
 export const formatArgs = (options: Record<string, unknown>) => {
   const keys = Object.keys(options);
   const listParams = keys.map((key) => {
-    if (isCustomType(options[key])) {
+    if (isCustomType(key)) {
       return `${key}: ${options[key]}`;
     }
     if (isString(options[key])) {

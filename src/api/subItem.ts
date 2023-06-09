@@ -1,4 +1,4 @@
-import { DistinctArgs } from "../interfaces/generics";
+import { DeepPick, DistinctArgs } from "../interfaces/generics";
 import { CreateSubItemArgs, ItemField } from "../interfaces/item";
 import { formatArgs, formatFields } from "../apiHelper";
 import request, { ResponseFormatEnum } from "../request";
@@ -35,17 +35,15 @@ class SubItemApi {
     itemId: number,
     fields: T
   ) => {
-    const response = await request(
-      `query { items (ids: ${itemId}) { subitems  {${formatFields(fields)}}}}`
-    );
-    if (!Array.isArray(response)) {
-      throw new Error("data format not valid");
-    }
-    return (response[0].subitems || []) as Awaited<
-      ReturnType<
-        typeof request<ItemField, typeof fields, ResponseFormatEnum.ARRAY>
-      >
-    >;
+    const rawFields = fields.map(
+      (field) => `items.subitems.${field}`
+    ) as DistinctArgs<ItemField<2>>;
+    const response = await request<
+      ItemField<2>,
+      typeof rawFields,
+      ResponseFormatEnum.ARRAY
+    >(`query { items (ids: ${itemId}) { subitems {${formatFields(fields)}}}}`);
+    return (response[0].subitems || []) as DeepPick<ItemField, T[number]>[];
   };
 }
 

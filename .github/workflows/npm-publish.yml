@@ -6,6 +6,9 @@ name: Node.js Package
 on:
   release:
     types: [created]
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -16,7 +19,8 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm test
+      - run: npm run build
+      - run: MONDAY_API_KEY=${{secrets.MONDAY_API_KEY}} npm run test
 
   publish-npm:
     needs: build
@@ -25,9 +29,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm run build
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}

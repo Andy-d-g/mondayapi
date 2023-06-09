@@ -6,9 +6,14 @@ import SubItemApi from "./subItem";
 import WorkspaceApi from "./workspace";
 import config from "../config";
 
+interface ApiOptions {
+  log?: boolean;
+}
+
 class Api {
-  constructor(apiKey: string) {
+  constructor(apiKey: string, options: ApiOptions = {}) {
     config.mondayApiKey = apiKey;
+    config.log = options.log || false;
   }
 
   public group = GroupApi;

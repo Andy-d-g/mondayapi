@@ -1,6 +1,6 @@
-import { BoardField } from "../interfaces/board";
+import { BoardField, CreateBoardArgs } from "../interfaces/board";
 import { DistinctArgs } from "../interfaces/generics";
-import { formatFields } from "../apiHelper";
+import { formatArgs, formatFields } from "../apiHelper";
 import request, { ResponseFormatEnum } from "../request";
 
 class BoardApi {
@@ -15,9 +15,11 @@ class BoardApi {
     boardId: number,
     fields: T
   ) => {
-    return request<BoardField, typeof fields>(
-      `query { boards (ids: ${boardId}) {${formatFields(fields)}} }`
-    );
+    return (
+      await request<BoardField, typeof fields, ResponseFormatEnum.ARRAY>(
+        `query { boards (ids: ${boardId}) {${formatFields(fields)}} }`
+      )
+    )[0];
   };
 
   /**
@@ -31,19 +33,25 @@ class BoardApi {
   ) => {
     return request<BoardField, typeof fields, ResponseFormatEnum.ARRAY>(
       `query { boards {${formatFields(fields)}} }`
-    ); //as unknown as Array<Awaited<ReturnType<typeof request<BoardField, T>>>>;
+    );
   };
 
-  /*
+  /**
+   * Create board
+   * @template {T}
+   * @param {CreateBoardArgs} args - The board id
+   * @param {T} fields - The expect fields
+   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
+   */
   public static createBoard = <T extends DistinctArgs<BoardField>>(
     args: CreateBoardArgs,
     fields: T
   ) => {
     return request<BoardField, typeof fields>(
-      `mutation { create_board () {${formatFields(fields)}} }`
+      // prettier-ignore
+      `mutation { create_board (${formatArgs(args)}) {${formatFields(fields)}} }`
     );
   };
-  */
 
   /**
    * Remove board by id
@@ -53,7 +61,7 @@ class BoardApi {
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
   public static removeBoard = <T extends DistinctArgs<BoardField>>(
-    boardId: string,
+    boardId: number,
     fields: T
   ) => {
     return request<BoardField, typeof fields>(
