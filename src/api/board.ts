@@ -11,12 +11,12 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static getBoard = async <T extends DistinctArgs<BoardField>>(
+  public static getBoard = async <T extends DistinctArgs<BoardField<1>>>(
     boardId: number,
     fields: T
   ) => {
     return (
-      await request<BoardField, typeof fields, ResponseFormatEnum.ARRAY>(
+      await request<BoardField<1>, typeof fields, ResponseFormatEnum.ARRAY>(
         `query { boards (ids: ${boardId}) {${formatFields(fields)}} }`
       )
     )[0];
@@ -28,10 +28,10 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an array of object which contains provide fields
    */
-  public static listBoard = async <T extends DistinctArgs<BoardField>>(
+  public static listBoard = async <T extends DistinctArgs<BoardField<1>>>(
     fields: T
   ) => {
-    return request<BoardField, typeof fields, ResponseFormatEnum.ARRAY>(
+    return request<BoardField<1>, typeof fields, ResponseFormatEnum.ARRAY>(
       `query { boards {${formatFields(fields)}} }`
     );
   };
@@ -43,11 +43,11 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static createBoard = <T extends DistinctArgs<BoardField>>(
+  public static createBoard = <T extends DistinctArgs<BoardField<1>>>(
     args: CreateBoardArgs,
     fields: T
   ) => {
-    return request<BoardField, typeof fields>(
+    return request<BoardField<1>, typeof fields>(
       // prettier-ignore
       `mutation { create_board (${formatArgs(args)}) {${formatFields(fields)}} }`
     );
@@ -60,11 +60,11 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static removeBoard = <T extends DistinctArgs<BoardField>>(
+  public static removeBoard = <T extends DistinctArgs<BoardField<1>>>(
     boardId: number,
     fields: T
   ) => {
-    return request<BoardField, typeof fields>(
+    return request<BoardField<1>, typeof fields>(
       // prettier-ignore
       `mutation { delete_board (board_id: ${boardId}) {${formatFields(fields)}} }`
     );

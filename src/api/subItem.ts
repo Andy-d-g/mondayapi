@@ -12,13 +12,13 @@ class SubItemApi {
    * @param {Record<string, string | number>} values - values to insert into the sub items
    * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
    */
-  public static createSubItem = async <T extends DistinctArgs<ItemField>>(
+  public static createSubItem = async <T extends DistinctArgs<ItemField<1>>>(
     args: CreateSubItemArgs,
     fields: T,
     values: Record<string, string | number>
   ) => {
     const column_values = JSON.stringify(JSON.stringify(values));
-    return request<ItemField, typeof fields>(
+    return request<ItemField<1>, typeof fields>(
       // prettier-ignore
       `mutation { create_subitem (${formatArgs(args)}, column_values: ${column_values} ) {${formatFields(fields)}} }`
     );
@@ -31,15 +31,17 @@ class SubItemApi {
    * @param {T} fields - The expect fields
    * @return {Array<Awaited<ReturnType<typeof request<ItemField, typeof fields>>>>} A promise of an object which contains provide fields
    */
-  public static listSubItemsByItem = async <T extends DistinctArgs<ItemField>>(
+  public static listSubItemsByItem = async <
+    T extends DistinctArgs<ItemField<1>>
+  >(
     itemId: number,
     fields: T
   ) => {
     const rawFields = fields.map(
       (field) => `items.subitems.${field}`
-    ) as DistinctArgs<ItemField<2>>;
+    ) as DistinctArgs<ItemField<1>>;
     const response = await request<
-      ItemField<2>,
+      ItemField<1>,
       typeof rawFields,
       ResponseFormatEnum.ARRAY
     >(`query { items (ids: ${itemId}) { subitems {${formatFields(fields)}}}}`);

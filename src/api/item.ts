@@ -13,13 +13,13 @@ class ItemApi {
    * @param {Record<string, string | number>} values - The values to add into the item
    * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
    */
-  public static createItem = <T extends DistinctArgs<ItemField>>(
+  public static createItem = <T extends DistinctArgs<ItemField<1>>>(
     args: CreateItemArgs,
     fields: T,
     values: Record<string, string | number>
   ) => {
     const column_values = JSON.stringify(JSON.stringify(values));
-    return request<ItemField, typeof fields>(
+    return request<ItemField<1>, typeof fields>(
       // prettier-ignore
       `mutation { create_item (${formatArgs(args)}, column_values: ${column_values} ) { ${formatFields(fields)} }}`
     );
@@ -32,7 +32,7 @@ class ItemApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
    */
-  public static listItemsByBoard = async <T extends DistinctArgs<ItemField>>(
+  public static listItemsByBoard = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
     fields: T
   ) => {
@@ -59,7 +59,7 @@ class ItemApi {
    * @param {T} fields - The expect fields
    * @return {Array<Awaited<ReturnType<typeof request<ItemField, typeof fields>>>>} A promise of an object which contains provide fields
    */
-  public static listItemsByGroup = async <T extends DistinctArgs<ItemField>>(
+  public static listItemsByGroup = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
     groupId: string,
     fields: T

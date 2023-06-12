@@ -20,7 +20,8 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run build
-      - run: MONDAY_API_KEY=${{secrets.MONDAY_API_KEY}} npm run test
+      - run: export MONDAY_API_KEY=${{secrets.MONDAY_API_KEY}}
+      - run: npm run test
 
   publish-npm:
     needs: build

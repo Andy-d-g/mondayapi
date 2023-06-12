@@ -1,6 +1,6 @@
 {
   "name": "mondayapi",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Wrap the https monday API. It allows to have typed responses and provide correct parameters.",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
@@ -12,8 +12,7 @@
     "build": "tsc",
     "start": "node ./dist/",
     "dev": "npm run build && npm run start",
-    "test": "node --test ./dist/__tests__/",
-    "publish": "npm run build && npm run test && npm publish"
+    "test": "node --test ./dist/__tests__/"
   },
   "repository": {
     "type": "git",
