@@ -30,7 +30,7 @@ class ItemApi {
    * @template {T}
    * @param {number} boardId - Board id
    * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
+   * @return {ReturnType<typeof request<ItemField<1>, T>>} A promise of an object which contains provide fields
    */
   public static listItemsByBoard = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
@@ -48,7 +48,7 @@ class ItemApi {
       // prettier-ignore
       `query { boards (ids: ${boardId}) { items {${formatFields(fields)} }}}`
     );
-    return (response[0].items || []) as DeepPick<ItemField, T[number]>[];
+    return (response[0].items || []) as DeepPick<ItemField<1>, T[number]>[];
   };
 
   /**
@@ -57,7 +57,7 @@ class ItemApi {
    * @param {number} boardId - Board id
    * @param {number} groupId - Group id
    * @param {T} fields - The expect fields
-   * @return {Array<Awaited<ReturnType<typeof request<ItemField, typeof fields>>>>} A promise of an object which contains provide fields
+   * @return {Array<Awaited<ReturnType<typeof request<ItemField<1>, typeof fields>>>>} A promise of an object which contains provide fields
    */
   public static listItemsByGroup = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
@@ -76,7 +76,7 @@ class ItemApi {
       `query { boards (ids: ${boardId}) { groups (ids: ${groupId}) { items {${formatFields(fields)} }}}}`
     );
     return (response[0].groups[0].items || []) as DeepPick<
-      ItemField,
+      ItemField<1>,
       T[number]
     >[];
   };

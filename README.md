@@ -51,3 +51,9 @@ The official monday api documentation : https://developer.monday.com/api-referen
 ## Contribute
 
 [join me on Github](https://github.com/Andy-d-g/mondayapi)
+
+## Ads
+
+Little ads for my website builder for restaurant (in dev mode) : https://ipreze.dev
+
+Thank you ❤️

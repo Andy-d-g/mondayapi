@@ -10,7 +10,7 @@ class SubItemApi {
    * @param {CreateSubItemArgs} args - Board id
    * @param {T} fields - The expect fields
    * @param {Record<string, string | number>} values - values to insert into the sub items
-   * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
+   * @return {ReturnType<typeof request<ItemField<1>, T>>} A promise of an object which contains provide fields
    */
   public static createSubItem = async <T extends DistinctArgs<ItemField<1>>>(
     args: CreateSubItemArgs,
@@ -45,7 +45,7 @@ class SubItemApi {
       typeof rawFields,
       ResponseFormatEnum.ARRAY
     >(`query { items (ids: ${itemId}) { subitems {${formatFields(fields)}}}}`);
-    return (response[0].subitems || []) as DeepPick<ItemField, T[number]>[];
+    return (response[0].subitems || []) as DeepPick<ItemField<1>, T[number]>[];
   };
 }
 
