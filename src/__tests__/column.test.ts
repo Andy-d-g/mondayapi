@@ -6,7 +6,7 @@ import {
   CreateColumnArgs,
   RemoveColumnArgs,
   UpdateColumnArgs,
-} from "interfaces";
+} from "../interfaces";
 import api from "./utils";
 
 let board_id = 123;

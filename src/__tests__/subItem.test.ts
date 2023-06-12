@@ -1,7 +1,7 @@
 import { after, before, describe, it } from "node:test";
 import { strictEqual, deepStrictEqual } from "node:assert";
 import { DistinctArgs } from "../interfaces/generics";
-import { CreateSubItemArgs, ItemField } from "interfaces";
+import { CreateSubItemArgs, ItemField } from "../interfaces";
 import api from "./utils";
 
 let board_id = 123;
@@ -42,7 +42,7 @@ describe("Sub Item API", () => {
       item_name,
       parent_item_id: item_id,
     };
-    const keys = ["id", "name", "state"] satisfies DistinctArgs<ItemField>;
+    const keys = ["id", "name", "state"] satisfies DistinctArgs<ItemField<1>>;
     const response = await api.subItem.createSubItem(args, keys, {});
     deepStrictEqual(Object.keys(response), keys);
     strictEqual(response.name, item_name);

@@ -7,7 +7,7 @@ import {
 import { DeepPick, DistinctArgs } from "../interfaces/generics";
 import { formatArgs, formatFields } from "../apiHelper";
 import request, { ResponseFormatEnum } from "../request";
-import { BoardField } from "interfaces";
+import { BoardField } from "../interfaces";
 
 class ColumnApi {
   /**
@@ -66,7 +66,7 @@ class ColumnApi {
       typeof rawFields,
       ResponseFormatEnum.ARRAY
     >(`query { boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`);
-    return response[0].columns || ([] as DeepPick<ColumnField, T[number]>[]);
+    return (response[0].columns || []) as DeepPick<ColumnField, T[number]>[];
   };
 
   /**
