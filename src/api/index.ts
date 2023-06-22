@@ -11,9 +11,8 @@ interface ApiOptions {
 }
 
 class Api {
-  constructor(apiKey: string, options: ApiOptions = {}) {
+  constructor(apiKey: string) {
     config.mondayApiKey = apiKey;
-    config.log = options.log || false;
   }
 
   public group = GroupApi;

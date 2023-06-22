@@ -28,14 +28,11 @@ const request = async <
       },
     }
   );
-  // Improve monday error
-  //console.log(response.data)
-  const { data } = response.data;
-  if (config.log) {
-    console.info(response);
-    console.info(query);
+  const { data, errors } = response.data;
+  if (errors) {
+    console.log(errors)
+    throw new Error("Invalid request");
   }
-  if (!data) throw new Error("No data");
   const key = Object.keys(data).at(0);
   if (!key) throw new Error("No key");
   return data[key];
