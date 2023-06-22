@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "./config";
 import { DistinctArgs, DeepPick } from "./interfaces/generics";
+import util from "util";
 
 export enum ResponseFormatEnum {
   OBJECT = "object",
@@ -30,7 +31,8 @@ const request = async <
   );
   const { data, errors } = response.data;
   if (errors) {
-    console.log(errors)
+    console.error(query);
+    console.error(util.inspect(errors, false, null, true));
     throw new Error("Invalid request");
   }
   const key = Object.keys(data).at(0);
