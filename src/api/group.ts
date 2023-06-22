@@ -1,4 +1,4 @@
-import { DistinctArgs } from "../interfaces/generics";
+import { DeepPick, DistinctArgs } from "../interfaces/generics";
 import {
   CreateGroupArgs,
   GroupField,
@@ -6,6 +6,7 @@ import {
 } from "../interfaces/group";
 import { formatArgs, formatFields } from "../apiHelper";
 import request, { ResponseFormatEnum } from "../request";
+import { BoardField } from "../interfaces";
 
 class GroupApi {
   /**
@@ -19,9 +20,15 @@ class GroupApi {
     boardId: number,
     fields: T
   ) => {
-    return request<GroupField<1>, typeof fields, ResponseFormatEnum.ARRAY>(
-      `query {boards (ids: ${boardId}) {${formatFields(fields)}} }`
-    );
+    const rawFields = fields.map((field) => `groups.${field}`) as DistinctArgs<
+      BoardField<1>
+    >;
+    const response = await request<
+      BoardField<1>,
+      typeof rawFields,
+      ResponseFormatEnum.ARRAY
+    >(`query {boards (ids: ${boardId}) { groups {${formatFields(fields)}}} }`);
+    return (response[0].groups || []) as DeepPick<GroupField<1>, T[number]>[];
   };
 
   /**

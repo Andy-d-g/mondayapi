@@ -28,6 +28,8 @@ const request = async <
       },
     }
   );
+  // Improve monday error
+  //console.log(response.data)
   const { data } = response.data;
   if (config.log) {
     console.info(response);
