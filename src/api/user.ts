@@ -10,6 +10,9 @@ import {
 } from "../interfaces";
 
 class UserApi {
+  /**
+   * Get user by id
+   */
   public static get = async <T extends DistinctArgs<UserField>>(
     userId: UserField["id"],
     fields: T
@@ -19,6 +22,9 @@ class UserApi {
     );
   };
 
+  /**
+   * List users
+   */
   public static list = async <T extends DistinctArgs<UserField>>(
     limit: number,
     fields: T
@@ -28,6 +34,9 @@ class UserApi {
     );
   };
 
+  /**
+   * Add user into a board
+   */
   public static addToBoard = async <T extends DistinctArgs<UserField>>(
     userId: UserField["id"],
     boardId: BoardField["id"],
@@ -40,6 +49,9 @@ class UserApi {
     );
   };
 
+  /**
+   * Add user into a workspace
+   */
   public static addToWorkspace = async <T extends DistinctArgs<UserField>>(
     userId: UserField["id"],
     workspaceId: WorkspaceField["id"],
@@ -52,6 +64,9 @@ class UserApi {
     );
   };
 
+  /**
+   * Remove user from a workspace
+   */
   public static removeFromWorkspace = async <T extends DistinctArgs<UserField>>(
     userId: UserField["id"],
     workspaceId: WorkspaceField["id"],

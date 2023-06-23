@@ -31,12 +31,11 @@ const request = async <
   );
   const { data, errors } = response.data;
   if (errors) {
-    console.error(query);
+    console.error(`Query : ${query}`);
     console.error(util.inspect(errors, false, null, true));
     throw new Error("Invalid request");
   }
-  const key = Object.keys(data).at(0);
-  if (!key) throw new Error("No key");
+  const key = Object.keys(data).at(0)!;
   return data[key];
 };
 

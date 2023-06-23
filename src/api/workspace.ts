@@ -5,11 +5,7 @@ import request, { ResponseFormatEnum } from "../request";
 
 class WorkspaceApi {
   /**
-   * Get workspace
-   * @template {T}
-   * @param {number} workspaceId - Workspace id
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<WorkspaceField, T>>} A promise of an object which contains provide fields
+   * Get workspace by id
    */
   public static get = async <T extends DistinctArgs<WorkspaceField>>(
     workspaceId: string,
@@ -23,6 +19,9 @@ class WorkspaceApi {
     return response[0];
   };
 
+  /**
+   * Remove workspace by id
+   */
   public static remove = async <T extends DistinctArgs<WorkspaceField>>(
     workspaceId: string,
     fields: T

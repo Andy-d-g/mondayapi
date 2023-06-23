@@ -12,12 +12,8 @@ import { BoardField } from "../interfaces";
 class ColumnApi {
   /**
    * Create column
-   * @template {T}
-   * @param {CreateColumnArgs} args - The arguments to create the column
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
    */
-  public static create = <T extends DistinctArgs<ColumnField>>(
+  public static create = async <T extends DistinctArgs<ColumnField>>(
     args: CreateColumnArgs,
     fields: T
   ) => {
@@ -29,13 +25,8 @@ class ColumnApi {
 
   /**
    * Update column by board id and column id
-   * @template {T}
-   * @param {UpdateColumnArgs} args - The arguments to remove the column
-   * @param {T} fields - The expect fields
-   * @param {Record<string, string | number>} values - The values to add into the column
-   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
    */
-  public static update = <T extends DistinctArgs<ColumnField>>(
+  public static update = async <T extends DistinctArgs<ColumnField>>(
     args: UpdateColumnArgs,
     fields: T,
     values: Record<string, string | number>
@@ -49,10 +40,6 @@ class ColumnApi {
 
   /**
    * List column by board id
-   * @template {T}
-   * @param {number} boardId - The arguments to remove the column
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an array of object which contains provide fields
    */
   public static listByBoard = async <T extends DistinctArgs<ColumnField>>(
     boardId: number,
@@ -71,12 +58,8 @@ class ColumnApi {
 
   /**
    * Remove column by board id and column id
-   * @template {T}
-   * @param {RemoveColumnArgs} args - The arguments to remove the column
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
    */
-  public static remove = <T extends DistinctArgs<ColumnField>>(
+  public static remove = async <T extends DistinctArgs<ColumnField>>(
     args: RemoveColumnArgs,
     fields: T
   ) => {

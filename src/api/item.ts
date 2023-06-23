@@ -7,13 +7,8 @@ import { BoardField } from "../interfaces";
 class ItemApi {
   /**
    * Create item
-   * @template {T}
-   * @param {CreateItemArgs} args - The arguments to remove the group
-   * @param {T} fields - The expect fields
-   * @param {Record<string, string | number>} values - The values to add into the item
-   * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
    */
-  public static create = <T extends DistinctArgs<ItemField<1>>>(
+  public static create = async <T extends DistinctArgs<ItemField<1>>>(
     args: CreateItemArgs,
     fields: T,
     values: Record<string, string | number>
@@ -26,11 +21,7 @@ class ItemApi {
   };
 
   /**
-   * List items by boardId
-   * @template {T}
-   * @param {number} boardId - Board id
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<ItemField<1>, T>>} A promise of an object which contains provide fields
+   * List items by board id
    */
   public static listByBoard = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
@@ -52,12 +43,7 @@ class ItemApi {
   };
 
   /**
-   * List items by boardId and groupId
-   * @template {T}
-   * @param {number} boardId - Board id
-   * @param {number} groupId - Group id
-   * @param {T} fields - The expect fields
-   * @return {Array<Awaited<ReturnType<typeof request<ItemField<1>, typeof fields>>>>} A promise of an object which contains provide fields
+   * List items by board id and group id
    */
   public static listByGroup = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
@@ -79,6 +65,32 @@ class ItemApi {
       ItemField<1>,
       T[number]
     >[];
+  };
+
+  /**
+   * Remove item by id
+   */
+  public static remove = async <T extends DistinctArgs<ItemField<1>>>(
+    itemId: number,
+    fields: T
+  ) => {
+    return await request<ItemField<1>, typeof fields>(
+      // prettier-ignore
+      `mutation { delete_item (item_id: ${itemId}) { ${formatFields(fields)} }}`
+    );
+  };
+
+  /**
+   * Archive item by id
+   */
+  public static archive = async <T extends DistinctArgs<ItemField<1>>>(
+    itemId: number,
+    fields: T
+  ) => {
+    return await request<ItemField<1>, typeof fields>(
+      // prettier-ignore
+      `mutation { archive_item (item_id: ${itemId}) { ${formatFields(fields)} }}`
+    );
   };
 }
 

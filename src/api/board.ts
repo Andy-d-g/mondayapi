@@ -6,10 +6,6 @@ import request, { ResponseFormatEnum } from "../request";
 class BoardApi {
   /**
    * Get board by id
-   * @template {T}
-   * @param {number} boardId - The board id
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
   public static get = async <T extends DistinctArgs<BoardField<1>>>(
     boardId: number,
@@ -24,9 +20,6 @@ class BoardApi {
 
   /**
    * List boards
-   * @template {T}
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an array of object which contains provide fields
    */
   public static list = async <T extends DistinctArgs<BoardField<1>>>(
     fields: T
@@ -38,10 +31,6 @@ class BoardApi {
 
   /**
    * Create board
-   * @template {T}
-   * @param {CreateBoardArgs} args - The board id
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
   public static create = <T extends DistinctArgs<BoardField<1>>>(
     args: CreateBoardArgs,
@@ -55,10 +44,6 @@ class BoardApi {
 
   /**
    * Remove board by id
-   * @template {T}
-   * @param {number} boardId - The board id
-   * @param {T} fields - The expect fields
-   * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
   public static remove = <T extends DistinctArgs<BoardField<1>>>(
     boardId: number,

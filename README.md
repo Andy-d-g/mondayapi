@@ -25,11 +25,19 @@ import Api from "mondayapi";
 
 const api = new Api("MONDAY API KEY");
 
-const boardId = 123;
-const groupId = 456;
-const items = await api.item.listItemsByGroup(boardId, groupId, [
-    "id", "name"
-]);
+const board_id = 123;
+const group_id = 456;
+const item = await api.item.create(
+  {
+    board_id,
+    group_id,
+    item_name: "itemName",
+  },
+  ["id"],
+  {}
+);
+const itemId = Number(item.id)
+await api.item.archive(itemId, ["id"]);
 // ⚠️ (Board | Item) id needs to be cast : Number(id)
 ```
 
