@@ -17,7 +17,7 @@ class ColumnApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
    */
-  public static createColumn = <T extends DistinctArgs<ColumnField>>(
+  public static create = <T extends DistinctArgs<ColumnField>>(
     args: CreateColumnArgs,
     fields: T
   ) => {
@@ -35,7 +35,7 @@ class ColumnApi {
    * @param {Record<string, string | number>} values - The values to add into the column
    * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
    */
-  public static updateColumn = <T extends DistinctArgs<ColumnField>>(
+  public static update = <T extends DistinctArgs<ColumnField>>(
     args: UpdateColumnArgs,
     fields: T,
     values: Record<string, string | number>
@@ -54,7 +54,7 @@ class ColumnApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an array of object which contains provide fields
    */
-  public static listColumnByBoard = async <T extends DistinctArgs<ColumnField>>(
+  public static listByBoard = async <T extends DistinctArgs<ColumnField>>(
     boardId: number,
     fields: T
   ) => {
@@ -76,7 +76,7 @@ class ColumnApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<ColumnField, T>>} A promise of an object which contains provide fields
    */
-  public static removeColumn = <T extends DistinctArgs<ColumnField>>(
+  public static remove = <T extends DistinctArgs<ColumnField>>(
     args: RemoveColumnArgs,
     fields: T
   ) => {

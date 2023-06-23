@@ -16,7 +16,7 @@ class GroupApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<GroupField, T>>} A promise of an array of object which contains provide fields
    */
-  public static listGroup = async <T extends DistinctArgs<GroupField<1>>>(
+  public static list = async <T extends DistinctArgs<GroupField<1>>>(
     boardId: number,
     fields: T
   ) => {
@@ -38,7 +38,7 @@ class GroupApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<GroupField, T>>} A promise of an object which contains provide fields
    */
-  public static createGroup = <T extends DistinctArgs<GroupField<1>>>(
+  public static create = <T extends DistinctArgs<GroupField<1>>>(
     args: CreateGroupArgs,
     fields: T
   ) => {
@@ -56,7 +56,7 @@ class GroupApi {
    * @return {ReturnType<typeof request<GroupField, T>>} A promise of an object which contains provide fields
    */
   // Need specific access that I don't have
-  public static removeGroup = <T extends DistinctArgs<GroupField<1>>>(
+  public static remove = <T extends DistinctArgs<GroupField<1>>>(
     args: RemoveGroupArgs,
     fields: T
   ) => {

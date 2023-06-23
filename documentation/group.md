@@ -6,28 +6,28 @@
 import Api from "mondayapi";
 const api = new Api("MONDAY API KEY");
 const boardId = 67484;
-api.group.listGroup(boardId, ["id"]);
+api.group.list(boardId, ["id"]);
 ```
 
 ## API
 
 Defined in [/src/api/group.ts](../src/api/group.ts)
 
-### **listGroup**
+### **list**
 
 | Name    | Type                                       | Optional |
 | ------- | ------------------------------------------ | -------- |
 | boardId | Number                                     | False    |
 | fields  | [GroupField[]](../src/interfaces/group.ts) | False    |
 
-### **createGroup**
+### **create**
 
 | Name   | Type                                          | Optional |
 | ------ | --------------------------------------------- | -------- |
 | args   | [CreateGroupArgs](../src/interfaces/group.ts) | False    |
 | fields | [GroupField[]](../src/interfaces/group.ts)    | False    |
 
-### **removeGroup**
+### **remove**
 
 | Name   | Type                                            | Optional |
 | ------ | ----------------------------------------------- | -------- |

@@ -6,14 +6,14 @@
 import Api from "mondayapi";
 const api = new Api("MONDAY API KEY");
 const itemId = 67484;
-api.subItem.listSubItemsByItem(itemId, ["id"]);
+api.subItem.listByItem(itemId, ["id"]);
 ```
 
 ## API
 
 Defined in [/src/api/item.ts](../src/api/item.ts)
 
-### **createSubItem**
+### **create**
 
 | Name   | Type                                           | Optional |
 | ------ | ---------------------------------------------- | -------- |
@@ -21,7 +21,7 @@ Defined in [/src/api/item.ts](../src/api/item.ts)
 | fields | [ItemField[]](../src/interfaces/item.ts)       | False    |
 | values | Record<string, string \| number>               | False    |
 
-### **listSubItemsByItem**
+### **listByItem**
 
 | Name   | Type                                     | Optional |
 | ------ | ---------------------------------------- | -------- |

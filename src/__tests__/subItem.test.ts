@@ -10,17 +10,17 @@ let item_id = 123;
 
 describe("Sub Item API", () => {
   before(async () => {
-    const responseBoard = await api.board.createBoard(
+    const responseBoard = await api.board.create(
       { board_name: "board_name", board_kind: "share" },
       ["id"]
     );
     board_id = Number(responseBoard.id);
-    const responseGroup = await api.group.createGroup(
+    const responseGroup = await api.group.create(
       { board_id, group_name: "group_name" },
       ["id"]
     );
     group_id = responseGroup.id;
-    const responseItem = await api.item.createItem(
+    const responseItem = await api.item.create(
       {
         board_id,
         group_id,
@@ -33,24 +33,24 @@ describe("Sub Item API", () => {
   });
 
   after(async () => {
-    await api.board.removeBoard(board_id, ["id"]);
+    await api.board.remove(board_id, ["id"]);
   });
 
-  it("createSubItem", async () => {
+  it("create", async () => {
     const item_name = "test";
     const args: CreateSubItemArgs = {
       item_name,
       parent_item_id: item_id,
     };
     const keys = ["id", "name", "state"] satisfies DistinctArgs<ItemField<1>>;
-    const response = await api.subItem.createSubItem(args, keys, {});
+    const response = await api.subItem.create(args, keys, {});
     deepStrictEqual(Object.keys(response), keys);
     strictEqual(response.name, item_name);
   });
 
-  it("listSubItemsByItem", async () => {
+  it("listByItem", async () => {
     const keys = ["id", "name"] satisfies DistinctArgs<ItemField>;
-    const response = await api.subItem.listSubItemsByItem(item_id, keys);
+    const response = await api.subItem.listByItem(item_id, keys);
     strictEqual(response.length, 1);
     deepStrictEqual(Object.keys(response[0]), keys);
   });

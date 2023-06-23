@@ -12,7 +12,7 @@ class SubItemApi {
    * @param {Record<string, string | number>} values - values to insert into the sub items
    * @return {ReturnType<typeof request<ItemField<1>, T>>} A promise of an object which contains provide fields
    */
-  public static createSubItem = async <T extends DistinctArgs<ItemField<1>>>(
+  public static create = async <T extends DistinctArgs<ItemField<1>>>(
     args: CreateSubItemArgs,
     fields: T,
     values: Record<string, string | number>
@@ -31,7 +31,7 @@ class SubItemApi {
    * @param {T} fields - The expect fields
    * @return {Array<Awaited<ReturnType<typeof request<ItemField, typeof fields>>>>} A promise of an object which contains provide fields
    */
-  public static listSubItemsByItem = async <
+  public static listByItem = async <
     T extends DistinctArgs<ItemField<1>>
   >(
     itemId: number,

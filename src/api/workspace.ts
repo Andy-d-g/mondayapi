@@ -11,7 +11,7 @@ class WorkspaceApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<WorkspaceField, T>>} A promise of an object which contains provide fields
    */
-  public static getWorkspace = async <T extends DistinctArgs<WorkspaceField>>(
+  public static get = async <T extends DistinctArgs<WorkspaceField>>(
     workspaceId: string,
     fields: T
   ) => {
@@ -21,6 +21,16 @@ class WorkspaceApi {
       ResponseFormatEnum.ARRAY
     >(`query { workspaces (ids: ${workspaceId}) {${formatFields(fields)}} }`);
     return response[0];
+  };
+
+  public static remove = async <T extends DistinctArgs<WorkspaceField>>(
+    workspaceId: string,
+    fields: T
+  ) => {
+    return await request<WorkspaceField, typeof fields>(
+      // prettier-ignore
+      `mutation { delete_workspace (workspace_id: ${workspaceId}) { ${formatFields(fields)} }}`
+    );
   };
 }
 

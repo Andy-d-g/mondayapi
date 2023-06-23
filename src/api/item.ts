@@ -13,7 +13,7 @@ class ItemApi {
    * @param {Record<string, string | number>} values - The values to add into the item
    * @return {ReturnType<typeof request<ItemField, T>>} A promise of an object which contains provide fields
    */
-  public static createItem = <T extends DistinctArgs<ItemField<1>>>(
+  public static create = <T extends DistinctArgs<ItemField<1>>>(
     args: CreateItemArgs,
     fields: T,
     values: Record<string, string | number>
@@ -32,7 +32,7 @@ class ItemApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<ItemField<1>, T>>} A promise of an object which contains provide fields
    */
-  public static listItemsByBoard = async <T extends DistinctArgs<ItemField<1>>>(
+  public static listByBoard = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
     fields: T
   ) => {
@@ -59,7 +59,7 @@ class ItemApi {
    * @param {T} fields - The expect fields
    * @return {Array<Awaited<ReturnType<typeof request<ItemField<1>, typeof fields>>>>} A promise of an object which contains provide fields
    */
-  public static listItemsByGroup = async <T extends DistinctArgs<ItemField<1>>>(
+  public static listByGroup = async <T extends DistinctArgs<ItemField<1>>>(
     boardId: number,
     groupId: string,
     fields: T

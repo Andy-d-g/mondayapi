@@ -12,7 +12,7 @@ let board = {
 };
 
 describe("Board API", () => {
-  it("createBoard", async () => {
+  it("create", async () => {
     const args: CreateBoardArgs = {
       board_kind: board.board_kind as BoardKind,
       board_name: board.name,
@@ -24,27 +24,27 @@ describe("Board API", () => {
       "name",
       "description",
     ] satisfies DistinctArgs<BoardField>;
-    const response = await api.board.createBoard(args, keys);
+    const response = await api.board.create(args, keys);
     deepStrictEqual(Object.keys(response), keys);
     board = response;
   });
 
-  it("getBoard", async () => {
+  it("get", async () => {
     const keys = ["id", "description"] satisfies DistinctArgs<BoardField>;
-    const response = await api.board.getBoard(board.id, ["id", "description"]);
+    const response = await api.board.get(board.id, ["id", "description"]);
     deepStrictEqual(Object.keys(response), keys);
     strictEqual(response.description, board.description);
   });
 
-  it("listBoard", async () => {
+  it("list", async () => {
     const keys = ["id"] satisfies DistinctArgs<BoardField>;
-    const response = await api.board.listBoard(keys);
+    const response = await api.board.list(keys);
     response.forEach((board) => deepStrictEqual(Object.keys(board), keys));
   });
 
-  it("removeBoard", async () => {
+  it("remove", async () => {
     const keys = ["name", "description"] satisfies DistinctArgs<BoardField>;
-    const response = await api.board.removeBoard(board.id, keys);
+    const response = await api.board.remove(board.id, keys);
     deepStrictEqual(Object.keys(response), keys);
   });
 });

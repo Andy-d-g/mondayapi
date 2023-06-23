@@ -11,7 +11,7 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static getBoard = async <T extends DistinctArgs<BoardField<1>>>(
+  public static get = async <T extends DistinctArgs<BoardField<1>>>(
     boardId: number,
     fields: T
   ) => {
@@ -28,7 +28,7 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an array of object which contains provide fields
    */
-  public static listBoard = async <T extends DistinctArgs<BoardField<1>>>(
+  public static list = async <T extends DistinctArgs<BoardField<1>>>(
     fields: T
   ) => {
     return request<BoardField<1>, typeof fields, ResponseFormatEnum.ARRAY>(
@@ -43,7 +43,7 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static createBoard = <T extends DistinctArgs<BoardField<1>>>(
+  public static create = <T extends DistinctArgs<BoardField<1>>>(
     args: CreateBoardArgs,
     fields: T
   ) => {
@@ -60,7 +60,7 @@ class BoardApi {
    * @param {T} fields - The expect fields
    * @return {ReturnType<typeof request<BoardField, T>>} A promise of an object which contains provide fields
    */
-  public static removeBoard = <T extends DistinctArgs<BoardField<1>>>(
+  public static remove = <T extends DistinctArgs<BoardField<1>>>(
     boardId: number,
     fields: T
   ) => {

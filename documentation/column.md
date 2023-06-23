@@ -6,28 +6,28 @@
 import Api from "mondayapi";
 const api = new Api("MONDAY API KEY");
 const boardId = 67484;
-api.column.listColumnByBoard(boardId, ["id"]);
+api.column.listByBoard(boardId, ["id"]);
 ```
 
 ## API
 
 Defined in [/src/api/column.ts](../src/api/column.ts)
 
-### **createColumn**
+### **create**
 
 | Name   | Type                                            | Optional |
 | ------ | ----------------------------------------------- | -------- |
 | args   | [CreateColumnArgs](../src/interfaces/column.ts) | False    |
 | fields | [ColumnField[]](../src/interfaces/column.ts)    | False    |
 
-### **removeColumn**
+### **remove**
 
 | Name   | Type                                            | Optional |
 | ------ | ----------------------------------------------- | -------- |
 | args   | [RemoveColumnArgs](../src/interfaces/column.ts) | False    |
 | fields | [BoardField[]](../src/interfaces/board.ts)      | False    |
 
-### **updateColumn**
+### **update**
 
 | Name   | Type                                            | Optional |
 | ------ | ----------------------------------------------- | -------- |
@@ -35,7 +35,7 @@ Defined in [/src/api/column.ts](../src/api/column.ts)
 | fields | [BoardField[]](../src/interfaces/board.ts)      | False    |
 | values | Record<string, string \| number>                | False    |
 
-### **listColumnByBoard**
+### **listByBoard**
 
 | Name    | Type                                       | Optional |
 | ------- | ------------------------------------------ | -------- |
