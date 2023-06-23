@@ -6,6 +6,8 @@ import { ItemField } from "./item";
 // https://developer.monday.com/api-reference/docs/boards
 export type BoardKind = "public" | "private" | "share";
 
+export type BoardSubscriberKind = "subscriber" | "owner";
+
 export type BaseBoardField = {
   description: string;
   id: number;

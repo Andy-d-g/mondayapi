@@ -5,10 +5,7 @@ import ItemApi from "./item";
 import SubItemApi from "./subItem";
 import WorkspaceApi from "./workspace";
 import config from "../config";
-
-interface ApiOptions {
-  log?: boolean;
-}
+import UserApi from "./user";
 
 class Api {
   constructor(apiKey: string) {
@@ -21,6 +18,7 @@ class Api {
   public subItem = SubItemApi;
   public workspace = WorkspaceApi;
   public board = BoardApi;
+  public user = UserApi
 }
 
 export default Api;

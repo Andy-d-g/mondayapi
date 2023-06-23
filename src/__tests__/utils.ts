@@ -1,5 +1,6 @@
 import Api from "../api";
 
 const apiKey = process.env.MONDAY_API_KEY;
-const api = new Api(apiKey as string);
+if (!apiKey) throw new Error("Api key not found");
+const api = new Api(apiKey);
 export default api;
