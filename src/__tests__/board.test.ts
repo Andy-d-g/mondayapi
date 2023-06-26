@@ -26,7 +26,10 @@ describe("Board API", () => {
     ] satisfies DistinctArgs<BoardField>;
     const response = await api.board.create(args, keys);
     deepStrictEqual(Object.keys(response), keys);
-    board = response;
+    board = {
+      ...response,
+      id: Number(response.id),
+    };
   });
 
   it("get", async () => {

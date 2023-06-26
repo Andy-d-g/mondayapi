@@ -13,10 +13,12 @@ class ItemApi {
     fields: T,
     values: Record<string, string | number>
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     const column_values = JSON.stringify(JSON.stringify(values));
     return request<ItemField<1>, typeof fields>(
       // prettier-ignore
-      `mutation { create_item (${formatArgs(args)}, column_values: ${column_values} ) { ${formatFields(fields)} }}`
+      `mutation { create_item (${formatedArgs}, column_values: ${column_values} ) { ${formatedFields} }}`
     );
   };
 
@@ -31,14 +33,13 @@ class ItemApi {
     const rawFields = fields.map((field) => `items.${field}`) as DistinctArgs<
       BoardField<1>
     >;
+    const formatedArgs = formatArgs({ ids: [boardId] });
+    const formatedFields = formatFields(fields);
     const response = await request<
       BoardField<1>,
       typeof rawFields,
       ResponseFormatEnum.ARRAY
-    >(
-      // prettier-ignore
-      `query { boards (ids: ${boardId}) { items {${formatFields(fields)} }}}`
-    );
+    >(`query { boards (${formatedArgs}) { items { ${formatedFields} }}}`);
     return (response[0].items || []) as DeepPick<ItemField<1>, T[number]>[];
   };
 
@@ -50,6 +51,9 @@ class ItemApi {
     groupId: string,
     fields: T
   ) => {
+    const formatedBoardArgs = formatArgs({ ids: [boardId] });
+    const formatedGroupArgs = formatArgs({ ids: [groupId] });
+    const formatedFields = formatFields(fields);
     const rawFields = fields.map(
       (field) => `boards.groups.${field}`
     ) as DistinctArgs<BoardField<2>>;
@@ -59,7 +63,7 @@ class ItemApi {
       ResponseFormatEnum.ARRAY
     >(
       // prettier-ignore
-      `query { boards (ids: ${boardId}) { groups (ids: ${groupId}) { items {${formatFields(fields)} }}}}`
+      `query { boards (${formatedBoardArgs}) { groups (${formatedGroupArgs}) { items {${formatedFields} }}}}`
     );
     return (response[0].groups[0].items || []) as DeepPick<
       ItemField<1>,
@@ -74,9 +78,11 @@ class ItemApi {
     itemId: number,
     fields: T
   ) => {
+    const formatedArgs = formatArgs({ item_id: itemId });
+    const formatedFields = formatFields(fields);
     return await request<ItemField<1>, typeof fields>(
       // prettier-ignore
-      `mutation { delete_item (item_id: ${itemId}) { ${formatFields(fields)} }}`
+      `mutation { delete_item (${formatedArgs}) { ${formatedFields} }}`
     );
   };
 
@@ -87,9 +93,10 @@ class ItemApi {
     itemId: number,
     fields: T
   ) => {
+    const formatedArgs = formatArgs({ item_id: itemId });
+    const formatedFields = formatFields(fields);
     return await request<ItemField<1>, typeof fields>(
-      // prettier-ignore
-      `mutation { archive_item (item_id: ${itemId}) { ${formatFields(fields)} }}`
+      `mutation { archive_item (${formatedArgs}) { ${formatedFields} }}`
     );
   };
 }

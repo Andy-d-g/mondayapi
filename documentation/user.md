@@ -13,6 +13,26 @@ api.user.listByBoard(limit, ["id"]);
 
 Defined in [/src/api/user.ts](../src/api/user.ts)
 
+### **me**
+
+| Name   | Type                                     | Optional |
+| ------ | ---------------------------------------- | -------- |
+| fields | [UserField[]](../src/interfaces/user.ts) | False    |
+
+### **getByIds**
+
+| Name    | Type                                           | Optional |
+| ------- | ---------------------------------------------- | -------- |
+| userIds | [UserField["id"][]](../src/interfaces/user.ts) | False    |
+| fields  | [UserField[]](../src/interfaces/user.ts)       | False    |
+
+### **getByEmails**
+
+| Name       | Type                                              | Optional |
+| ---------- | ------------------------------------------------- | -------- |
+| userEmails | [UserField["email"][]](../src/interfaces/user.ts) | False    |
+| fields     | [UserField[]](../src/interfaces/user.ts)          | False    |
+
 ### **list**
 
 | Name   | Type                                     | Optional |
@@ -22,26 +42,22 @@ Defined in [/src/api/user.ts](../src/api/user.ts)
 
 ### **addToBoard**
 
-| Name    | Type                                              | Optional |
-| ------- | ------------------------------------------------- | -------- |
-| userId  | [UserField["id"]](../src/interfaces/user.ts)      | False    |
-| boardId | [BoardField["id"]](../src/interfaces/board.ts)    | False    |
-| kind    | [BoardSubscriberKind](../src/interfaces/board.ts) | False    |
-| fields  | [UserField[]](../src/interfaces/user.ts)          | False    |
+| Name   | Type                                            | Optional |
+| ------ | ----------------------------------------------- | -------- |
+| args   | [AddUserToBoardArgs](../src/interfaces/user.ts) | False    |
+| fields | [UserField[]](../src/interfaces/user.ts)        | False    |
 
 ### **addToWorkspace**
 
-| Name        | Type                                                      | Optional |
-| ----------- | --------------------------------------------------------- | -------- |
-| userId      | [UserField["id"]](../src/interfaces/user.ts)              | False    |
-| workspaceId | [WorkspaceField["id"]](../src/interfaces/workspace.ts)    | False    |
-| kind        | [WorkspaceSubscriberKind](../src/interfaces/workspace.ts) | False    |
-| fields      | [UserField[]](../src/interfaces/user.ts)                  | False    |
+| Name   | Type                                                        | Optional |
+| ------ | ----------------------------------------------------------- | -------- |
+| args   | [AddUserToWorkspaceArgs["id"][]](../src/interfaces/user.ts) | False    |
+| fields | [UserField[]](../src/interfaces/user.ts)                    | False    |
 
 ### **removeFromWorkspace**
 
 | Name        | Type                                                   | Optional |
 | ----------- | ------------------------------------------------------ | -------- |
-| userId      | [UserField["id"]](../src/interfaces/user.ts)           | False    |
+| userIds     | [UserField["id"][]](../src/interfaces/user.ts)         | False    |
 | workspaceId | [WorkspaceField["id"]](../src/interfaces/workspace.ts) | False    |
 | fields      | [UserField[]](../src/interfaces/user.ts)               | False    |

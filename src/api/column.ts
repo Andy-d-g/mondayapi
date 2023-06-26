@@ -17,9 +17,10 @@ class ColumnApi {
     args: CreateColumnArgs,
     fields: T
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     return request<ColumnField, typeof fields>(
-      // prettier-ignore
-      `mutation { create_column (${formatArgs(args)}) {${formatFields(fields)}} }`
+      `mutation { create_column (${formatedArgs}) {${formatedFields}} }`
     );
   };
 
@@ -31,10 +32,12 @@ class ColumnApi {
     fields: T,
     values: Record<string, string | number>
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     const column_values = JSON.stringify(JSON.stringify(values));
     return request<ColumnField, typeof fields>(
       // prettier-ignore
-      `mutation { change_multiple_column_values (${formatArgs(args)}, column_values: ${column_values}) {${formatFields(fields)}}}`
+      `mutation { change_multiple_column_values (${formatedArgs}, column_values: ${column_values}) {${formatedFields}}}`
     );
   };
 
@@ -45,6 +48,8 @@ class ColumnApi {
     boardId: number,
     fields: T
   ) => {
+    const formatedArgs = formatArgs({ ids: [boardId] });
+    const formatedFields = formatFields(fields);
     const rawFields = fields.map(
       (field) => `boards.columns.${field}`
     ) as DistinctArgs<BoardField>;
@@ -52,7 +57,7 @@ class ColumnApi {
       BoardField,
       typeof rawFields,
       ResponseFormatEnum.ARRAY
-    >(`query { boards (ids: ${boardId}) { columns {${formatFields(fields)}}}}`);
+    >(`query { boards (${formatedArgs}) { columns {${formatedFields}}}}`);
     return (response[0].columns || []) as DeepPick<ColumnField, T[number]>[];
   };
 
@@ -63,9 +68,10 @@ class ColumnApi {
     args: RemoveColumnArgs,
     fields: T
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     return request<ColumnField, typeof fields>(
-      // prettier-ignore
-      `mutation { delete_column (${formatArgs(args)}) {${formatFields(fields)}} }`
+      `mutation { delete_column (${formatedArgs}) {${formatedFields}} }`
     );
   };
 }

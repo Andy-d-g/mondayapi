@@ -11,11 +11,14 @@ class BoardApi {
     boardId: number,
     fields: T
   ) => {
-    return (
-      await request<BoardField<1>, typeof fields, ResponseFormatEnum.ARRAY>(
-        `query { boards (ids: ${boardId}) {${formatFields(fields)}} }`
-      )
-    )[0];
+    const formatedArgs = formatArgs({ ids: [boardId] });
+    const formatedFields = formatFields(fields);
+    const response = await request<
+      BoardField<1>,
+      typeof fields,
+      ResponseFormatEnum.ARRAY
+    >(`query { boards (${formatedArgs}) {${formatedFields}} }`);
+    return response[0];
   };
 
   /**
@@ -24,8 +27,9 @@ class BoardApi {
   public static list = async <T extends DistinctArgs<BoardField<1>>>(
     fields: T
   ) => {
+    const formatedFields = formatFields(fields);
     return request<BoardField<1>, typeof fields, ResponseFormatEnum.ARRAY>(
-      `query { boards {${formatFields(fields)}} }`
+      `query { boards {${formatedFields}} }`
     );
   };
 
@@ -36,9 +40,10 @@ class BoardApi {
     args: CreateBoardArgs,
     fields: T
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     return request<BoardField<1>, typeof fields>(
-      // prettier-ignore
-      `mutation { create_board (${formatArgs(args)}) {${formatFields(fields)}} }`
+      `mutation { create_board (${formatedArgs}) {${formatedFields}} }`
     );
   };
 
@@ -49,9 +54,10 @@ class BoardApi {
     boardId: number,
     fields: T
   ) => {
+    const formatedArgs = formatArgs({ board_id: boardId });
+    const formatedFields = formatFields(fields);
     return request<BoardField<1>, typeof fields>(
-      // prettier-ignore
-      `mutation { delete_board (board_id: ${boardId}) {${formatFields(fields)}} }`
+      `mutation { delete_board (${formatedArgs}) {${formatedFields}} }`
     );
   };
 }

@@ -17,22 +17,19 @@ const listToObj = (list: string[], obj: Record<string, any> = {}) => {
   return obj;
 };
 
-const formatFields_ = (obj: Record<string, any>) => {
+const _formatFields = (obj: Record<string, any>) => {
   let text = "";
   for (const key of Object.keys(obj)) {
     if (isEmpty(obj[key])) {
       text += ` ${key},`;
-    } else {
-      text += ` ${key} { ${formatFields_(obj[key])} },`;
+      continue;
     }
+    text += ` ${key} { ${_formatFields(obj[key])} },`;
   }
   return text.slice(0, -1);
 };
 
-export const formatFields = (args: string[]) => {
-  const obj = listToObj(args)
-  return formatFields_(obj)
-};
+export const formatFields = (args: string[]) => _formatFields(listToObj(args));
 
 const customType = z.enum([
   "position_relative_method",
@@ -40,24 +37,33 @@ const customType = z.enum([
   "board_kind",
   "column_type",
   "item_id",
+  "kind",
 ]);
 const isString = (v: unknown) => z.string().safeParse(v).success;
 const isNumber = (v: unknown) => z.number().safeParse(v).success;
 const isCustomType = (v: unknown) => customType.safeParse(v).success;
+const isArray = (v: unknown) => Array.isArray(v);
 
 export const formatArgs = (options: Record<string, unknown>) => {
+  // clean undefined properties
+  Object.keys(options).forEach((key) =>
+    options[key] === undefined ? delete options[key] : {}
+  );
   const keys = Object.keys(options);
   const listParams = keys.map((key) => {
-    if (isCustomType(key)) {
-      return `${key}: ${options[key]}`;
+    if (isCustomType(key)) return `${key}: ${options[key]}`;
+    if (isString(options[key])) return `${key}: "${options[key]}"`;
+    if (isNumber(options[key])) return `${key}: ${options[key]}`;
+    if (isArray(options[key])) {
+      const list = options[key] as unknown[];
+      const formatedList = list.map((e) => {
+        if (isString(e)) return `"${e}"`;
+        if (isNumber(e)) return e;
+        throw new Error(`type not supported : ${e}`);
+      });
+      return `${key}: [${formatedList.join(", ")}]`;
     }
-    if (isString(options[key])) {
-      return `${key}: "${options[key]}"`;
-    }
-    if (isNumber(options[key])) {
-      return `${key}: ${options[key]}`;
-    }
-    throw new Error("type not supported");
+    throw new Error(`type not supported : ${options[key]}`);
   });
   return listParams.join(", ");
 };

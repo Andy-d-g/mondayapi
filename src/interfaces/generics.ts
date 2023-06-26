@@ -4,7 +4,7 @@ type Tail<T extends string> = T extends `${string}.${infer Rest}`
   ? Rest
   : never;
 
-type NonEmptyArray<T> = [T, ...T[]];
+export type NonEmptyArray<T> = [T, ...T[]];
 
 export type DeepPick<T, K extends string> = T extends object
   ? {

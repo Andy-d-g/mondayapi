@@ -16,6 +16,8 @@ class GroupApi {
     boardId: number,
     fields: T
   ) => {
+    const formatedArgs = formatArgs({ ids: [boardId] });
+    const formatedFields = formatFields(fields);
     const rawFields = fields.map((field) => `groups.${field}`) as DistinctArgs<
       BoardField<1>
     >;
@@ -23,7 +25,7 @@ class GroupApi {
       BoardField<1>,
       typeof rawFields,
       ResponseFormatEnum.ARRAY
-    >(`query {boards (ids: ${boardId}) { groups {${formatFields(fields)}}} }`);
+    >(`query { boards (${formatedArgs}) { groups {${formatedFields}}} }`);
     return (response[0].groups || []) as DeepPick<GroupField<1>, T[number]>[];
   };
 
@@ -34,9 +36,10 @@ class GroupApi {
     args: CreateGroupArgs,
     fields: T
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     return request<GroupField<1>, typeof fields>(
-      // prettier-ignore
-      `mutation { create_group (${formatArgs(args)}) {${formatFields(fields)}}}`
+      `mutation { create_group (${formatedArgs}) {${formatedFields}}}`
     );
   };
 
@@ -48,9 +51,10 @@ class GroupApi {
     args: RemoveGroupArgs,
     fields: T
   ) => {
+    const formatedArgs = formatArgs(args);
+    const formatedFields = formatFields(fields);
     return request<GroupField<1>, typeof fields>(
-      // prettier-ignore
-      `mutation { delete_group (${formatArgs(args)}) {${formatFields(fields)}}}`
+      `mutation { delete_group (${formatedArgs}) {${formatedFields}}}`
     );
   };
 }
